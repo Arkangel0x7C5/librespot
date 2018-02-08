@@ -134,7 +134,7 @@ impl AudioFile {
         debug!("Downloading file {}", file_id);
 
         let (complete_tx, complete_rx) = oneshot::channel();
-        let (headers, data) = request_chunk(session, file_id, 0).split();
+        let (headers, data) = request_chunk(session, file_id, 0, CHUNK_SIZE).split();
 
         let open = AudioFileOpenStreaming {
             session: session.clone(),
@@ -162,11 +162,11 @@ impl AudioFile {
     }
 }
 
-fn request_chunk(session: &Session, file: FileId, index: usize) -> Channel {
+pub fn request_chunk(session: &Session, file: FileId, index: usize, chunk_size: usize) -> Channel {
     trace!("requesting chunk {}", index);
 
-    let start = (index * CHUNK_SIZE / 4) as u32;
-    let end = ((index + 1) * CHUNK_SIZE / 4) as u32;
+    let start = (index * chunk_size / 4) as u32;
+    let end = ((index + 1) * chunk_size / 4) as u32;
 
     let (id, channel) = session.channel().allocate();
 
@@ -236,7 +236,7 @@ impl AudioFileFetch {
             self.output.as_mut().unwrap()
                 .seek(SeekFrom::Start(offset as u64)).unwrap();
 
-            let (_headers, data) = request_chunk(&self.session, self.shared.file_id, self.index).split();
+            let (_headers, data) = request_chunk(&self.session, self.shared.file_id, self.index, CHUNK_SIZE).split();
             self.data_rx = data;
         }
     }
