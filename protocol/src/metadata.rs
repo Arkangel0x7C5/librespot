@@ -6781,6 +6781,28 @@ pub enum AudioFile_Format {
     OTHER5 = 13,
 }
 
+impl AudioFile_Format {
+    pub fn from_str(value: &str) -> ::std::option::Option<AudioFile_Format> {
+        match value {
+            "OGG_VORBIS_96" => ::std::option::Option::Some(AudioFile_Format::OGG_VORBIS_96),
+            "OGG_VORBIS_160" => ::std::option::Option::Some(AudioFile_Format::OGG_VORBIS_160),
+            "OGG_VORBIS_320" => ::std::option::Option::Some(AudioFile_Format::OGG_VORBIS_320),
+            "MP3_256" => ::std::option::Option::Some(AudioFile_Format::MP3_256),
+            "MP3_320" => ::std::option::Option::Some(AudioFile_Format::MP3_320),
+            "MP3_160" => ::std::option::Option::Some(AudioFile_Format::MP3_160),
+            "MP3_96" => ::std::option::Option::Some(AudioFile_Format::MP3_96),
+            "MP3_160_ENC" => ::std::option::Option::Some(AudioFile_Format::MP3_160_ENC),
+            "OTHER2" => ::std::option::Option::Some(AudioFile_Format::OTHER2),
+            "OTHER3" => ::std::option::Option::Some(AudioFile_Format::OTHER3),
+            "AAC_160" => ::std::option::Option::Some(AudioFile_Format::AAC_160),
+            "AAC_320" => ::std::option::Option::Some(AudioFile_Format::AAC_320),
+            "OTHER4" => ::std::option::Option::Some(AudioFile_Format::OTHER4),
+            "OTHER5" => ::std::option::Option::Some(AudioFile_Format::OTHER5),
+            _ => ::std::option::Option::None
+        }
+    }
+}
+
 impl ::protobuf::ProtobufEnum for AudioFile_Format {
     fn value(&self) -> i32 {
         *self as i32
